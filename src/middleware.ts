@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const isPublicRoute = createRouteMatcher(["/sign-in", "/sign-up", "/"]);
+const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)", "/"]);
 const isPublicApiRoute = createRouteMatcher(["/api/products", "/api/webhooks/users"]);
 
 export default clerkMiddleware((auth, req) => {
@@ -10,11 +10,12 @@ export default clerkMiddleware((auth, req) => {
 	const isAccessingDashboard = currentUrl.pathname === "/";
 	const isApiRequest = currentUrl.pathname.startsWith("/api");
 
-	// // If user is logged in and accessing a public route but not the dashboard
+	// If user is logged in and accessing a public route but not the dashboard
 	if (userId && isPublicRoute(req) && !isAccessingDashboard) {
 		return NextResponse.redirect(new URL("/", req.url));
 	}
-	//not logged in
+
+	// not logged in
 	if (!userId) {
 		// If user is not logged in and trying to access a protected route
 		if (!isPublicRoute(req) && !isPublicApiRoute(req)) {

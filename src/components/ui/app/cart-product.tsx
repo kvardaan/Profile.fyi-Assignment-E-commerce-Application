@@ -8,7 +8,7 @@ import { Button } from "@/components/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/select";
 
 interface CartProductProps {
-	product?: {
+	product: {
 		id: string;
 		name: string;
 		imageSrc: string;
@@ -18,12 +18,9 @@ interface CartProductProps {
 }
 
 const CartProduct = ({ product }: CartProductProps) => {
+	const [selectedQuantity, setSelectedQuantity] = useState<number>(product.quantity);
 	const context = useContext(CartContext);
 	const { removeFromCart, updateQuantity } = context!;
-
-	const [selectedQuantity, setSelectedQuantity] = useState<number>(0);
-	if (!product) return;
-	setSelectedQuantity(product.quantity);
 
 	const handleQuantityChange = (value: string) => {
 		const newQuantity = Number(value);
