@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Profile.fyi Assignment: E-commerce Application
 
-## Getting Started
+## Job Description
+For the detailed job description, please refer to the following [link](https://docs.google.com/document/d/1s7KITQ_hHTMuEnXDRYumnSIXDYQ0sa6W5XzOc9PMxcw).
 
-First, run the development server:
+## Assignment
+For a comprehensive guide on the assignment, visit [here](https://docs.google.com/document/d/1yUA4DMH4F8JS6m1Boqco668EhxSesKqS07toes0CdBg).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Tech Stack
+- **Frontend:** Next.js with TypeScript
+- **Backend:** Next.js with TypeScript
+- **Database:** Prisma ORM + PostgreSQL
+- **Authentication:** Clerk
+- **State Management:** React Context API
+- **Styling:** Tailwind CSS
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Setup Instructions
+#### 1. Clone the Repository.
+  Open your terminal and clone the repository using -
+  ```bash
+  git clone https://github.com/kvardaan/Profile.fyi-Assignment-E-commerce-Application.git
+  ```
+#### 2. Install Dependencies
+  Open the `Profile.fyi-Assignment-E-commerce-Application` directory in your preferred code editor or IDE.
+  
+  Open a terminal for the directory, then run the following command in the terminal to install all the dependencies.
+  ```bash
+  npm install
+  ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### 3. Configure Environment Variables
+  In the root of the directory, create a `.env` file by copying the `.env.example` file.
+  ```bash
+  cp .env.example .env
+  ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+  In the `.env` file, set up the application environment and authentication routes.
+  ```
+  NODE_ENV=development
+  NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+  NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+  ```
 
-## Learn More
+#### 4. Set Up Database (PostgreSQL)
+  You can use a cloud service like Neon or Supabase, or run a local instance with Docker -
+  - Local PostgreSQL with Docker:
+  ```bash
+  docker run -d -e POSTGRES_USER=<username> -e POSTGRES_PASSWORD=<password> -e POSTGRES_DB=<database_name> -p 5432:5432 postgres
+  ```
 
-To learn more about Next.js, take a look at the following resources:
+  Update the `.env` file with your PostgreSQL connection details -
+  - Local instance -
+  ```bash
+  DATABASE_URL=postgresql://<username>:<password>@localhost:5432/<database_name>
+  ```
+  Make sure to replace `<username>`, `<password>` & `<database_name>` with the correct fields. 
+  
+  - Cloud instance: Set the `DATABASE_URL` to your cloud provider's URL.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### 5. Configure Authentication
+  Sign up at Clerk and create a new application. Under ***Sign in*** options, select only ***Email*** and disable other options.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  Get your `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` from the Clerk dashboard and add them to the `.env` file:
 
-## Deploy on Vercel
+  ```bash
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+  CLERK_SECRET_KEY=
+  ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  Set up a webhook in the Clerk dashboard for syncing user data to your database, following the [Clerk documentation](https://clerk.com/docs/integrations/webhooks/sync-data). Configure `ngrok` as needed.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  Add the `WEBHOOK_SECRET` to your `.env` file -
+  ```bash
+  WEBHOOK_SECRET=
+  ```
+
+#### 6. Start the Application
+  Run the application in development mode -
+  ```bash
+  npm run dev
+  ```
+
+  Visit the application at -
+  ```bash
+  http://localhost:<port_number>
+  ```
+  Replace `<port_number>` with the port number on which your application is running (default is 3000).
+
+
+Additional Resources
+- [Clerk Documentation](https://clerk.com/docs)
+- [Prisma ORM Documentation](https://www.prisma.io/docs/orm)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs/installation)
+
+Feel free to reach out with any questions or issues!
